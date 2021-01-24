@@ -54,13 +54,14 @@ function bestLabel(output){
 window.onload = function () {
 
     const config = {
-        iterations: 1000000,
+        iterations: 200000,
         binaryThresh: 0.5,
         hiddenLayers: [10],
         log: true,
         logPeriod: 1000,
         learningRate: 0.1,
-        activation: 'sigmoid'
+        activation: 'sigmoid',
+        errorThresh: 0.02,
     };
 
     // create a simple feed forward neural network with backpropagation
