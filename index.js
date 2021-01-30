@@ -1,19 +1,12 @@
+import { nnConfig } from './nn.js'
+
+console.log(nnConfig)
+
 const MIN_CAN_TAKE = 1
 const MAX_CAN_TAKE = 3
 const WINNING_STRAT_BLOCK_SIZE = 4
 const STARTING_PIECES_COUNT = 20
 const SAMPLE_SIZE = 100
-
-const nnConfig = {
-    iterations: 100000,
-    binaryThresh: 0.5,
-    hiddenLayers: [10],
-    log: true,
-    logPeriod: 1000,
-    learningRate: 0.1,
-    activation: 'sigmoid',
-    errorThresh: 0.01,
-}
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -48,12 +41,13 @@ function formatSample(io) {
 }
 
 function bestLabel(output) {
+    console.log(output)
     let bestScore = -1
     let bestLabel = null
-    for (k in output) {
-        if ((bestScore == -1) || (output[k] > bestScore)) {
-            bestScore = output[k]
-            bestLabel = k
+    for (const key in output) {
+        if ((bestScore == -1) || (output[key] > bestScore)) {
+            bestScore = output[key]
+            bestLabel = key
         }
     }
     return bestLabel
@@ -124,6 +118,7 @@ function winrate(fn1, fn2) {
         var remaining = 20
 
         while (remaining > 0) {
+            var took = null
             if (firstToPlay) {
                 took = fn1(remaining)
             } else {
