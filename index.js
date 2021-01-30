@@ -4,7 +4,7 @@ const WINNING_STRAT_BLOCK_SIZE = 4
 const STARTING_PIECES_COUNT = 20
 const SAMPLE_SIZE = 100
 
-const config = {
+const nnConfig = {
     iterations: 100000,
     binaryThresh: 0.5,
     hiddenLayers: [10],
@@ -160,7 +160,7 @@ function sortPopulation(population, against) {
 window.onload = function () {
 
     // create a simple feed forward neural network with backpropagation
-    const net = new brain.NeuralNetwork(config);
+    const net = new brain.NeuralNetwork(nnConfig);
 
     let trainingData = []
     for (let i = 0; i < SAMPLE_SIZE; i++) {
