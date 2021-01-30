@@ -147,11 +147,11 @@ function winrate(fn1, fn2) {
 }
 
 function selection(population) {
-    return population.slice(0, population.length / 2)
+    return population.slice(0, Math.floor(population.length / 3))
 }
 
-function sortPopulation(population) {
-    let populationWithVsRandom = population.map(c => [c, winrate(playChromosome(c), randomPlay)])
+function sortPopulation(population, against) {
+    let populationWithVsRandom = population.map(c => [c, winrate(playChromosome(c), against)])
     populationWithVsRandom.sort((a, b) => b[1] - a[1])
     console.log(`Best vs random winrate: ${populationWithVsRandom[0][1] * 100}`)
     return populationWithVsRandom.map(c => c[0])
@@ -198,16 +198,8 @@ window.onload = function () {
     console.log("=")
     console.log(ch4)
 
-    let wr = winrate(playChromosome(ch), randomPlay)
-    console.log(`winrate ch vs random = ${wr * 100}`)
-
-    let wr2 = winrate(playChromosome(ch), playChromosome(ch2))
-    console.log(`winrate ch vs ch2 = ${wr2 * 100}`)
-
     var population = makePopulation()
-    // console.log(population)
-
-    var populationSorted = sortPopulation(population)
+    var populationSorted = sortPopulation(population, randomPlay)
 
     for (let idGen = 0; idGen < 100; idGen++) {
         let selectedPopulation = selection(populationSorted)
@@ -228,7 +220,7 @@ window.onload = function () {
         // console.log(newPop)
         population = newPop
 
-        populationSorted = sortPopulation(population)
+        populationSorted = sortPopulation(population, randomPlay)
         console.log(`Generation ${idGen} best chromosome: ${populationSorted[0]}`)
     }
 }
