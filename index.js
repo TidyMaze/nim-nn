@@ -5,12 +5,12 @@ const STARTING_PIECES_COUNT = 20
 const SAMPLE_SIZE = 100
 
 const config = {
-    iterations: 200000,
+    iterations: 100000,
     binaryThresh: 0.5,
     hiddenLayers: [10],
     log: true,
     logPeriod: 1000,
-    learningRate: 0.5,
+    learningRate: 0.1,
     activation: 'sigmoid',
     errorThresh: 0.01,
 }
@@ -159,28 +159,28 @@ function sortPopulation(population) {
 
 window.onload = function () {
 
-    // // create a simple feed forward neural network with backpropagation
-    // const net = new brain.NeuralNetwork(config);
+    // create a simple feed forward neural network with backpropagation
+    const net = new brain.NeuralNetwork(config);
 
-    // let trainingData = []
-    // for (let i = 0; i < SAMPLE_SIZE; i++) {
-    //     trainingData.push(formatSample(generateSample()))
-    // }
+    let trainingData = []
+    for (let i = 0; i < SAMPLE_SIZE; i++) {
+        trainingData.push(formatSample(generateSample()))
+    }
 
-    // console.log(net.train(trainingData))
+    console.log(net.train(trainingData))
 
-    // for (let index = 1; index <= STARTING_PIECES_COUNT; index++) {
-    //     let prediction = net.run([normalize(index)])
-    //     console.log(`for input ${index}, predicted ${bestLabel(prediction)}, correct was ${solve(index)}.\tDetails are ${JSON.stringify(prediction)}`)
-    // }
+    for (let index = 1; index <= STARTING_PIECES_COUNT; index++) {
+        let prediction = net.run([normalize(index)])
+        console.log(`for input ${index}, predicted ${bestLabel(prediction)}, correct was ${solve(index)}.\tDetails are ${JSON.stringify(prediction)}`)
+    }
 
-    // function predictNN(n) {
-    //     return bestLabel(net.run([normalize(n)]))
-    // }
+    function predictNN(n) {
+        return bestLabel(net.run([normalize(n)]))
+    }
 
-    // let wr = winrate(predictNN, randomPlay)
+    let wrNN = winrate(predictNN, randomPlay)
 
-    // console.log(`${firstWins} vs ${secondWins} => NN winrate: ${firstWins / (firstWins + secondWins) * 100}%`)
+    console.log(`NN vs random winrate: ${wrNN * 100}%`)
 
     console.log("original:")
     let ch = makeChromosome()
@@ -209,7 +209,7 @@ window.onload = function () {
 
     var populationSorted = sortPopulation(population)
 
-    for (let idGen = 0; idGen < 1000; idGen++) {
+    for (let idGen = 0; idGen < 100; idGen++) {
         let selectedPopulation = selection(populationSorted)
 
         let newPop = []
