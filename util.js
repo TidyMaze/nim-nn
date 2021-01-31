@@ -7,3 +7,7 @@ export function getRandomInt(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
 }
+
+export function randIn(arr) {
+    return arr[getRandomInt(0, arr.length)]
+}
