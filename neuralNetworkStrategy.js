@@ -1,8 +1,8 @@
 import { getRandomInt } from './util.js'
 import { STARTING_PIECES_COUNT } from './game.js'
-import { solve } from './heuristic.js'
+import { solve } from './heuristicStrategy.js'
 
-export const nnConfig = {
+const nnConfig = {
     iterations: 100000,
     binaryThresh: 0.5,
     hiddenLayers: [10],

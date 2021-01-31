@@ -1,9 +1,7 @@
-import { nnConfig, trainNN } from './nn.js'
+import { trainNN } from './neuralNetworkStrategy.js'
 import { playGA } from './geneticAlgorithmStrategy.js'
 import { winrate } from './game.js'
 import { randomPlay } from './randomStrategy.js'
-
-console.log(nnConfig)
 
 window.onload = function () {
     let predictNN = trainNN()
