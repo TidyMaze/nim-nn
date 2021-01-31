@@ -1,10 +1,9 @@
 import { nnConfig } from './nn.js'
+import { solve } from './heuristic.js'
+import { constrain } from './util.js'
 
 console.log(nnConfig)
 
-const MIN_CAN_TAKE = 1
-const MAX_CAN_TAKE = 3
-const WINNING_STRAT_BLOCK_SIZE = 4
 const STARTING_PIECES_COUNT = 20
 const SAMPLE_SIZE = 100
 
@@ -14,10 +13,6 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function solve(n) {
-    return constrain((n - 1) % WINNING_STRAT_BLOCK_SIZE, MIN_CAN_TAKE, MAX_CAN_TAKE)
-}
-
 function normalize(v) {
     return v / STARTING_PIECES_COUNT
 }
@@ -25,10 +20,6 @@ function normalize(v) {
 function generateSample() {
     let input = getRandomInt(1, STARTING_PIECES_COUNT + 1)
     return [input, solve(input)]
-}
-
-function constrain(v, min, max) {
-    return Math.max(Math.min(max, v), min)
 }
 
 function formatSample(io) {
