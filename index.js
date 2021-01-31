@@ -1,17 +1,11 @@
 import { nnConfig } from './nn.js'
 import { solve } from './heuristic.js'
-import { constrain } from './util.js'
+import { constrain, getRandomInt } from './util.js'
 
 console.log(nnConfig)
 
 const STARTING_PIECES_COUNT = 20
 const SAMPLE_SIZE = 100
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min)) + min;
-}
 
 function normalize(v) {
     return v / STARTING_PIECES_COUNT
@@ -32,7 +26,6 @@ function formatSample(io) {
 }
 
 function bestLabel(output) {
-    console.log(output)
     let bestScore = -1
     let bestLabel = null
     for (const key in output) {
@@ -143,9 +136,7 @@ function sortPopulation(population, against) {
     return populationWithVsRandom.map(c => c[0])
 }
 
-window.onload = function () {
-
-    // create a simple feed forward neural network with backpropagation
+function trainNN(){
     const net = new brain.NeuralNetwork(nnConfig);
 
     let trainingData = []
@@ -160,30 +151,15 @@ window.onload = function () {
         console.log(`for input ${index}, predicted ${bestLabel(prediction)}, correct was ${solve(index)}.\tDetails are ${JSON.stringify(prediction)}`)
     }
 
-    function predictNN(n) {
+    return function predictNN(n) {
         return bestLabel(net.run([normalize(n)]))
     }
+}
 
+window.onload = function () {
+    let predictNN = trainNN()
     let wrNN = winrate(predictNN, randomPlay)
-
     console.log(`NN vs random winrate: ${wrNN * 100}%`)
-
-    console.log("original:")
-    let ch = makeChromosome()
-    console.log(ch)
-    let ch2 = mutation(ch)
-    console.log("mutated:")
-    console.log(ch2)
-
-    let ch3 = makeChromosome()
-    let ch4 = crossover(ch, ch3)
-    console.log("crossover:")
-    console.log(ch)
-    console.log("+")
-    console.log(ch3)
-    console.log("=")
-    console.log(ch4)
-
     var population = makePopulation()
     var populationSorted = sortPopulation(population, randomPlay)
 

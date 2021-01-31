@@ -8,3 +8,4 @@ export const nnConfig = {
     activation: 'sigmoid',
     errorThresh: 0.01,
 }
+
